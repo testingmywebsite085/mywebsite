@@ -134,7 +134,7 @@
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
 
-            const res = await fetch("/enviar", {
+            const res = await fetch("/api/enviar", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
@@ -146,3 +146,4 @@
     </script>
 </body>
 </html>
+
