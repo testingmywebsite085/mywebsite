@@ -5,16 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Denúncia Anônima</title>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: 'Poppins', sans-serif;
     }
 
     body {
-        background: #0d0d0d;
-        color: #f1c40f;
+        background: linear-gradient(135deg, #0d0d0d, #1a1a1a, #121212);
+        background-size: 400% 400%;
+        animation: gradientBG 12s ease infinite;
+        color: #00d9c0;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -22,46 +26,55 @@
         padding: 10px;
     }
 
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
     form {
         background: rgba(0, 0, 0, 0.85);
-        padding: 20px;
+        padding: 25px;
         border-radius: 15px;
         width: 100%;
-        max-width: 400px;
-        box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+        max-width: 420px;
+        box-shadow: 0 0 15px rgba(0, 217, 192, 0.3);
+        border: 1px solid rgba(0, 217, 192, 0.4);
+        backdrop-filter: blur(8px);
     }
 
     h2 {
         text-align: center;
-        margin-bottom: 20px;
-        font-size: 1.4rem;
-        color: #f1c40f;
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+        color: #00d9c0;
+        font-weight: 600;
     }
 
     label {
-        font-weight: bold;
         font-size: 0.85rem;
-        display: block;
         margin-bottom: 5px;
+        display: block;
+        color: #00bfa5;
     }
 
     select, input, textarea {
         width: 100%;
         padding: 10px;
         border-radius: 8px;
-        border: 2px solid #333;
+        border: 1.5px solid #004d47;
         outline: none;
         margin-bottom: 12px;
         font-size: 1rem;
-        background: #1a1a1a;
-        color: #f1c40f;
-        transition: 0.3s;
+        background: #0f0f0f;
+        color: #00d9c0;
+        transition: all 0.3s ease;
     }
 
     select:focus, input:focus, textarea:focus {
-        border-color: #f1c40f;
-        background: #262626;
-        box-shadow: 0 0 8px #f1c40f;
+        border-color: #00d9c0;
+        background: #151515;
+        box-shadow: 0 0 8px rgba(0, 217, 192, 0.4);
     }
 
     textarea {
@@ -76,16 +89,17 @@
         border-radius: 8px;
         font-size: 1rem;
         font-weight: bold;
-        background: linear-gradient(135deg, #f1c40f, #b7950b);
-        color: black;
+        background: linear-gradient(90deg, #00d9c0, #009688);
+        color: #000;
         cursor: pointer;
         transition: 0.3s;
+        box-shadow: 0 0 8px rgba(0, 217, 192, 0.3);
     }
 
     button:hover {
         transform: scale(1.03);
-        background: linear-gradient(135deg, #ffdf00, #a67c00);
-        box-shadow: 0 0 10px #f1c40f;
+        background: linear-gradient(90deg, #00f2d0, #00bfa5);
+        box-shadow: 0 0 12px rgba(0, 242, 208, 0.5);
     }
 
     .popup {
@@ -93,11 +107,12 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: #1a1a1a;
-        color: #f1c40f;
+        background: rgba(0, 0, 0, 0.9);
+        color: #00d9c0;
         padding: 20px;
         border-radius: 10px;
-        box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+        border: 1px solid #00d9c0;
+        box-shadow: 0 0 12px rgba(0, 217, 192, 0.4);
         text-align: center;
         max-width: 300px;
         display: none;
@@ -118,7 +133,10 @@
 <body>
 
 <form id="denunciaForm">
-    <h2>Denúncia Anônima</h2>
+    <h2>SISTEMA DE DENÚNCIA - BPRE</h2>
+    <h2 style="font-size: 0.9rem; font-weight: 400;">
+        Suas informações são sigilosas e enviadas com segurança.
+    </h2>
 
     <label>Tipo de Denúncia:</label>
     <select name="tipo" required>
@@ -130,14 +148,11 @@
         <option value="OUTROS">OUTROS</option>
     </select>
 
-    <label>Mais detalhes:</label>
-    <textarea name="descricao" required></textarea>
+    <label>Detalhes da ocorrência:</label>
+    <textarea name="descricao" placeholder="Descreva o máximo de informações possíveis..." required></textarea>
 
-    <label>Local (obrigatório):</label>
-    <input type="text" name="local" required>
-
-    <label>Data (opcional):</label>
-    <input type="date" name="data">
+    <label>Local (Rua, Bairro, Cidade):</label>
+    <input type="text" name="local" placeholder="Ex: Rua X, Bairro Y, Cidade Z" required>
 
     <label>Nível de urgência:</label>
     <select name="urgencia" required>
@@ -146,11 +161,14 @@
         <option value="ALTA">ALTA</option>
     </select>
 
+    <label>Data (opcional):</label>
+    <input type="date" name="data">
+
     <button type="submit">Enviar Denúncia</button>
 </form>
 
 <div id="popup" class="popup">
-    DENÚNCIA ENVIADA COM SUCESSO!
+    ✅ Denúncia enviada com sucesso!
 </div>
 
 <script>
@@ -160,7 +178,7 @@
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
 
-        const res = await fetch("/api/enviar.js", {
+        const res = await fetch("/api/enviar", { // sem .js
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
@@ -183,4 +201,3 @@
 
 </body>
 </html>
-
