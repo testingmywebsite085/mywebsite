@@ -1,39 +1,35 @@
-// arquivo: api/enviar.js
-import fetch from 'node-fetch';
+const fetch = require("node-fetch");
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
     if (req.method !== "POST") {
         return res.status(405).send("Método não permitido");
     }
 
     const { tipo, descricao, local, data, urgencia } = req.body;
 
-    const botToken = "8205921035:AAGoU4qrmoMbfKG9hbESCKdcCCR7VxFyBRM";
-    const chatId = "-1002557271864";
-
     const mensagem = `
-🚨 Nova Denúncia Anônima 🚨
-📄 Tipo: ${tipo}
-📝 Descrição: ${descricao}
-📍 Local: ${local}
-📅 Data: ${data || "Não informado"}
-⚠ Urgência: ${urgencia}
+🚨 *NOVA DENÚNCIA ANÔNIMA* 🚨
+📌 *TIPO DE DENÚNCIA:*  ${tipo}
+⚠️ *URGÊNCIA:*  ${urgencia}
+📍 *LOCALIZAÇÃO:*  ${local || "NÃO INFORMADO"}
+📝 *DETALHES:*  ${descricao}
+📅 *DATA:*  ${data || "NÃO INFORMADA"}
     `;
 
     try {
-        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                chat_id: chatId,
+                chat_id: process.env.CHAT_ID,
                 text: mensagem,
                 parse_mode: "Markdown"
             })
         });
 
-        res.status(200).send("Denúncia enviada com sucesso!");
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Erro ao enviar denúncia");
+        res.status(200).send("DENÚNCIA ENVIADA COM SUCESSO!");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("ERRO AO ENVIAR DENÚNCIA!");
     }
-}
+};
