@@ -15,10 +15,10 @@
     }
 
     body {
-        background: linear-gradient(135deg, #0d0d0d, #1a1a1a, #121212);
+        background: linear-gradient(145deg, #0a0a0a, #121212, #1b1b1b);
         background-size: 400% 400%;
-        animation: gradientBG 12s ease infinite;
-        color: #00d9c0;
+        animation: gradientBG 15s ease infinite;
+        color: #e0e0e0;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -33,48 +33,62 @@
     }
 
     form {
-        background: rgba(0, 0, 0, 0.85);
-        padding: 25px;
-        border-radius: 15px;
+        background: rgba(18, 18, 18, 0.95);
+        padding: 20px;
+        border-radius: 14px;
         width: 100%;
         max-width: 420px;
-        box-shadow: 0 0 15px rgba(0, 217, 192, 0.3);
-        border: 1px solid rgba(0, 217, 192, 0.4);
-        backdrop-filter: blur(8px);
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(6px);
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
         text-align: center;
-        margin-bottom: 12px;
-        font-size: 1.1rem;
-        color: #00d9c0;
+        margin-bottom: 6px;
+        font-size: 1.2rem;
         font-weight: 600;
+        color: #f5f5f5;
+    }
+
+    h3 {
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 400;
+        color: #b0b0b0;
+        margin-bottom: 18px;
     }
 
     label {
         font-size: 0.85rem;
-        margin-bottom: 5px;
+        margin-bottom: 4px;
         display: block;
-        color: #00bfa5;
+        color: #ccc;
     }
 
     select, input, textarea {
         width: 100%;
         padding: 10px;
         border-radius: 8px;
-        border: 1.5px solid #004d47;
+        border: 1px solid rgba(255,255,255,0.08);
         outline: none;
-        margin-bottom: 12px;
-        font-size: 1rem;
-        background: #0f0f0f;
-        color: #00d9c0;
+        margin-bottom: 14px;
+        font-size: 0.95rem;
+        background: #1a1a1a;
+        color: #f0f0f0;
         transition: all 0.3s ease;
     }
 
     select:focus, input:focus, textarea:focus {
-        border-color: #00d9c0;
-        background: #151515;
-        box-shadow: 0 0 8px rgba(0, 217, 192, 0.4);
+        border-color: #666;
+        background: #222;
+        box-shadow: 0 0 8px rgba(255,255,255,0.05);
     }
 
     textarea {
@@ -89,17 +103,16 @@
         border-radius: 8px;
         font-size: 1rem;
         font-weight: bold;
-        background: linear-gradient(90deg, #00d9c0, #009688);
-        color: #000;
+        background: linear-gradient(90deg, #444, #222);
+        color: #fff;
         cursor: pointer;
         transition: 0.3s;
-        box-shadow: 0 0 8px rgba(0, 217, 192, 0.3);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
 
     button:hover {
-        transform: scale(1.03);
-        background: linear-gradient(90deg, #00f2d0, #00bfa5);
-        box-shadow: 0 0 12px rgba(0, 242, 208, 0.5);
+        transform: scale(1.02);
+        background: linear-gradient(90deg, #555, #2a2a2a);
     }
 
     .popup {
@@ -107,22 +120,17 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.9);
-        color: #00d9c0;
-        padding: 20px;
-        border-radius: 10px;
-        border: 1px solid #00d9c0;
-        box-shadow: 0 0 12px rgba(0, 217, 192, 0.4);
+        background: rgba(15, 15, 15, 0.95);
+        color: #fff;
+        padding: 18px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
         text-align: center;
         max-width: 300px;
         display: none;
         animation: fadeIn 0.3s ease;
         z-index: 1000;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translate(-50%, -60%); }
-        to { opacity: 1; transform: translate(-50%, -50%); }
     }
 
     .popup.show {
@@ -133,10 +141,8 @@
 <body>
 
 <form id="denunciaForm">
-    <h2>SISTEMA DE DENÚNCIA - BPRE</h2>
-    <h2 style="font-size: 0.9rem; font-weight: 400;">
-        Suas informações são sigilosas e enviadas com segurança.
-    </h2>
+    <h2>SISTEMA DE DENÚNCIA ANÔNIMA</h2>
+    <h3>Suas informações serão repassadas para agentes da lei de forma sigilosa e com com segurança.</h3>
 
     <label>Tipo de Denúncia:</label>
     <select name="tipo" required>
@@ -178,7 +184,7 @@
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
 
-        const res = await fetch("/api/enviar", { // sem .js
+        const res = await fetch("/api/enviar", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
