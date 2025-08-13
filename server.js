@@ -12,14 +12,12 @@ const CHAT_ID = process.env.CHAT_ID;
 app.post("/enviar", async (req, res) => {
     const { tipo, descricao, local, data, urgencia } = req.body;
 
-    const mensagem = `
-🚨 *NOVA DENÚNCIA ANÔNIMA* 🚨
-📌 *TIPO DE DENÚNCIA:*  ${tipo}
-⚠️ *URGÊNCIA:*  ${urgencia}
-📍 *LOCALIZACAO:*  ${local || "NAO INFORMADO"}
-📝 *DETALHES:*  ${descricao}
-📅 *DATA:*  ${data || "NAO INFORMADA"}
-    `;
+const mensagem = "🚨 *NOVA DENÚNCIA ANÔNIMA* 🚨\n"
+  + "📌 *TIPO DE DENÚNCIA:* " + tipo + "\n"
+  + "⚠️ *URGÊNCIA:* " + urgencia + "\n"
+  + "📍 *LOCALIZAÇÃO:* " + (local || "NÃO INFORMADO") + "\n"
+  + "📝 *DETALHES:* " + descricao + "\n"
+  + "📅 *DATA:* " + (data || "NÃO INFORMADA");
 
     try {
         await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
@@ -42,5 +40,6 @@ app.post("/enviar", async (req, res) => {
 app.use(express.static("."));
 
 app.listen(3000, () => console.log("SERVER RUNNING: http://localhost:3000"));
+
 
 
