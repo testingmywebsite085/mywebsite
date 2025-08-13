@@ -1,149 +1,185 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Denúncia Anônima</title>
-    <style>
-        /* Reset básico */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Denúncia Anônima</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-        body {
-            background: #0d0d0d;
-            color: #f1c40f;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+    body {
+        background: #0d0d0d;
+        color: #f1c40f;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 10px;
+    }
 
-        form {
-            background: rgba(0, 0, 0, 0.85);
-            padding: 30px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
-        }
+    form {
+        background: rgba(0, 0, 0, 0.85);
+        padding: 20px;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+    }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.8rem;
-            color: #f1c40f;
-        }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+        color: #f1c40f;
+    }
 
-        label {
-            font-weight: bold;
-            font-size: 0.9rem;
-            display: block;
-            margin-bottom: 5px;
-        }
+    label {
+        font-weight: bold;
+        font-size: 0.85rem;
+        display: block;
+        margin-bottom: 5px;
+    }
 
-        select, input, textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 2px solid #333;
-            outline: none;
-            margin-bottom: 15px;
-            font-size: 1rem;
-            background: #1a1a1a;
-            color: #f1c40f;
-            transition: 0.3s;
-        }
+    select, input, textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 2px solid #333;
+        outline: none;
+        margin-bottom: 12px;
+        font-size: 1rem;
+        background: #1a1a1a;
+        color: #f1c40f;
+        transition: 0.3s;
+    }
 
-        select:focus, input:focus, textarea:focus {
-            border-color: #f1c40f;
-            background: #262626;
-            box-shadow: 0 0 8px #f1c40f;
-        }
+    select:focus, input:focus, textarea:focus {
+        border-color: #f1c40f;
+        background: #262626;
+        box-shadow: 0 0 8px #f1c40f;
+    }
 
-        option {
-            background: #1a1a1a;
-            color: #f1c40f;
-        }
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+    button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #f1c40f, #b7950b);
+        color: black;
+        cursor: pointer;
+        transition: 0.3s;
+    }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #f1c40f, #b7950b);
-            color: black;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    button:hover {
+        transform: scale(1.03);
+        background: linear-gradient(135deg, #ffdf00, #a67c00);
+        box-shadow: 0 0 10px #f1c40f;
+    }
 
-        button:hover {
-            transform: scale(1.03);
-            background: linear-gradient(135deg, #ffdf00, #a67c00);
-            box-shadow: 0 0 10px #f1c40f;
-        }
-    </style>
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #1a1a1a;
+        color: #f1c40f;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+        text-align: center;
+        max-width: 300px;
+        display: none;
+        animation: fadeIn 0.3s ease;
+        z-index: 1000;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translate(-50%, -60%); }
+        to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+    .popup.show {
+        display: block;
+    }
+</style>
 </head>
 <body>
-    <form id="denunciaForm">
-        <h2>Formulário de Denúncia Anônima</h2>
 
-        <label>Tipo de Denúncia:</label>
-        <select name="tipo" required>
-            <option value="PORTE ILEGAL DE ARMA">PORTE ILEGAL DE ARMA</option>
-            <option value="TRÁFICO DE DROGAS">TRÁFICO DE DROGAS</option>
-            <option value="AMEAÇA DE FACÇÕES">AMEAÇAS DE GRUPOS CRIMINOSO</option>
-            <option value="DISPAROS DE ARMA DE FOGO">DISPAROS DE ARMA DE FOGO</option>
-            <option value="OUTROS">OUTROS</option>
-        </select>
+<form id="denunciaForm">
+    <h2>Denúncia Anônima</h2>
 
-        <label>FORNEÇA MAIS DETALHES:</label>
-        <textarea name="descricao" required></textarea>
+    <label>Tipo de Denúncia:</label>
+    <select name="tipo" required>
+        <option value="">Selecione...</option>
+        <option value="PORTE ILEGAL DE ARMA">PORTE ILEGAL DE ARMA</option>
+        <option value="TRÁFICO DE DROGAS">TRÁFICO DE DROGAS</option>
+        <option value="AMEAÇA DE FACÇÕES">AMEAÇAS DE GRUPOS CRIMINOSOS</option>
+        <option value="DISPAROS DE ARMA DE FOGO">DISPAROS DE ARMA DE FOGO</option>
+        <option value="OUTROS">OUTROS</option>
+    </select>
 
-        <label>LOCAL(OBRIGATÓRIO):</label>
-        <input type="text" name="local" required>
+    <label>Mais detalhes:</label>
+    <textarea name="descricao" required></textarea>
 
-        <label>DATA DO OCORRIDO(OPCIONAL):</label>
-        <input type="date" name="data">
+    <label>Local (obrigatório):</label>
+    <input type="text" name="local" required>
 
-        <label>NÍVEL DE URGÊNCIA:</label>
-        <select name="urgencia" required>
-            <option value="BAIXA">BAIXA</option>
-            <option value="MÉDIA">MÉDIA</option>
-            <option value="ALTA">ALTA</option>
-        </select>
+    <label>Data (opcional):</label>
+    <input type="date" name="data">
 
-        <button type="submit">ENVIAR DENÚNCIA!</button>
-    </form>
+    <label>Nível de urgência:</label>
+    <select name="urgencia" required>
+        <option value="BAIXA">BAIXA</option>
+        <option value="MÉDIA">MÉDIA</option>
+        <option value="ALTA">ALTA</option>
+    </select>
 
-    <script>
-        document.getElementById("denunciaForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
+    <button type="submit">Enviar Denúncia</button>
+</form>
 
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
+<div id="popup" class="popup">
+    DENÚNCIA ENVIADA COM SUCESSO!
+</div>
 
-            const res = await fetch("/api/enviar", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            });
+<script>
+    document.getElementById("denunciaForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-            const resposta = await res.text();
-            alert(resposta);
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+
+        const res = await fetch("/enviar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
         });
-    </script>
+
+        const resposta = await res.text();
+
+        if (res.ok) {
+            const popup = document.getElementById("popup");
+            popup.classList.add("show");
+            setTimeout(() => {
+                popup.classList.remove("show");
+                document.getElementById("denunciaForm").reset();
+            }, 3000);
+        } else {
+            alert("Erro ao enviar denúncia: " + resposta);
+        }
+    });
+</script>
+
 </body>
 </html>
-
-
