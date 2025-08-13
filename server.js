@@ -14,10 +14,10 @@ app.post("/enviar", async (req, res) => {
 
     const mensagem = `
 🚨 *NOVA DENÚNCIA ANÔNIMA* 🚨\n
-📌 *TIPO DE DENÚNCIA:*  ${tipo}
-⚠️ *URGÊNCIA:*  ${urgencia}
-📍 *LOCALIZACAO:*  ${local || "NAO INFORMADO"}
-📝 *DETALHES:*  ${descricao}
+📌 *TIPO DE DENÚNCIA:*  ${tipo} \n
+⚠️ *URGÊNCIA:*  ${urgencia} \n
+📍 *LOCALIZACAO:*  ${local || "NAO INFORMADO"} \n
+📝 *DETALHES:*  ${descricao} \n
 📅 *DATA:*  ${data || "NAO INFORMADA"}
     `;
 
@@ -42,3 +42,4 @@ app.post("/enviar", async (req, res) => {
 app.use(express.static("."));
 
 app.listen(3000, () => console.log("SERVER RUNNING: http://localhost:3000"));
+
