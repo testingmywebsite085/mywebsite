@@ -9,14 +9,12 @@ module.exports = async (req, res) => {
     const { tipo, descricao, local, data, urgencia } = req.body || {};
 
     // Monta a mensagem
-    const mensagem = `
-🚨 *NOVA DENÚNCIA ANÔNIMA* 🚨
-📌 *TIPO DE DENÚNCIA:*  ${tipo}
-⚠️ *URGÊNCIA:*  ${urgencia}
-📍 *LOCALIZAÇÃO:*  ${local || "NÃO INFORMADO"}
-📝 *DETALHES:*  ${descricao}
-📅 *DATA:*  ${data || "NÃO INFORMADA"}
-    `;
+const mensagem = "🚨 *NOVA DENÚNCIA ANÔNIMA* 🚨\n"
+  + "📌 *TIPO DE DENÚNCIA:* " + tipo + "\n"
+  + "⚠️ *URGÊNCIA:* " + urgencia + "\n"
+  + "📍 *LOCALIZAÇÃO:* " + (local || "NÃO INFORMADO") + "\n"
+  + "📝 *DETALHES:* " + descricao + "\n"
+  + "📅 *DATA:* " + (data || "NÃO INFORMADA");
 
     try {
         // Envia para a API do Telegram
