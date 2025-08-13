@@ -8,8 +8,8 @@ export default async function handler(req, res) {
 
     const { tipo, descricao, local, data, urgencia } = req.body;
 
-    const botToken = "SEU_TOKEN_DO_BOT";
-    const chatId = "SEU_CHAT_ID";
+    const botToken = "8205921035:AAGoU4qrmoMbfKG9hbESCKdcCCR7VxFyBRM";
+    const chatId = "-1002557271864";
 
     const mensagem = `
 🚨 Nova Denúncia Anônima 🚨
