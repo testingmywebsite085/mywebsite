@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/jpeg" href="https://www.pm.ce.gov.br/wp-content/uploads/sites/25/2014/01/bpre.jpg">
+    <meta charset="UTF-8">
+    <title>Denúncia Anônima</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #0d0d0d;
+            color: #f1c40f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        form {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            color: #f1c40f;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #333;
+            outline: none;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            background: #1a1a1a;
+            color: #f1c40f;
+            transition: 0.3s;
+        }
+
+        select:focus, input:focus, textarea:focus {
+            border-color: #f1c40f;
+            background: #262626;
+            box-shadow: 0 0 8px #f1c40f;
+        }
+
+        option {
+            background: #1a1a1a;
+            color: #f1c40f;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #f1c40f, #b7950b);
+            color: black;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.03);
+            background: linear-gradient(135deg, #ffdf00, #a67c00);
+            box-shadow: 0 0 10px #f1c40f;
+        }
+    </style>
+</head>
+<body>
+    <form id="denunciaForm">
+        <h2>Formulário de Denúncia Anônima</h2>
+
+        <label>Tipo de Denúncia:</label>
+        <select name="tipo" required>
+            <option value="PORTE ILEGAL DE ARMA">PORTE ILEGAL DE ARMA</option>
+            <option value="TRÁFICO DE DROGAS">TRÁFICO DE DROGAS</option>
+            <option value="AMEAÇA DE FACÇÕES">AMEAÇAS DE GRUPOS CRIMINOSO</option>
+            <option value="DISPAROS DE ARMA DE FOGO">DISPAROS DE ARMA DE FOGO</option>
+            <option value="OUTROS">OUTROS</option>
+        </select>
+
+        <label>FORNEÇA MAIS DETALHES:</label>
+        <textarea name="descricao" required></textarea>
+
+        <label>LOCAL(OBRIGATÓRIO):</label>
+        <input type="text" name="local" required>
+
+        <label>DATA DO OCORRIDO(OPCIONAL):</label>
+        <input type="date" name="data">
+
+        <label>NÍVEL DE URGÊNCIA:</label>
+        <select name="urgencia" required>
+            <option value="BAIXA">BAIXA</option>
+            <option value="MÉDIA">MÉDIA</option>
+            <option value="ALTA">ALTA</option>
+        </select>
+
+        <button type="submit">ENVIAR DENÚNCIA!</button>
+    </form>
+
+    <script>
+        document.getElementById("denunciaForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            const res = await fetch("/enviar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const resposta = await res.text();
+            alert(resposta);
+        });
+    </script>
+</body>
+</html>
